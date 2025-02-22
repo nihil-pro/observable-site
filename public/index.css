@@ -1,0 +1,182 @@
+body { margin: 0 .5rem; }
+.paper.with-shadow { box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.3); }
+
+#theme-toggle {
+    transition: all 200ms ease-in-out;
+    width: var(--font-size);
+    line-height: var(--font-size);
+    height: var(--font-size);
+    color: color-mix(in srgb, var(--primary-color), transparent 20%);
+    &:hover {
+        color: var(--primary-color);
+        cursor: pointer;
+        transform: scale(1.1) }
+    & input { display: none; height: 0; width: 0 }
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    height: 50px;
+    border-top-left-radius: 0!important;
+    border-top-right-radius: 0!important;
+    border-top: none!important;
+}
+
+
+/*#docs, #main {*/
+/*    padding: 1rem;*/
+/*    border-radius: 2rem;*/
+/*    box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.3);*/
+/*    border: 1px solid color-mix(in srgb, CanvasText, Canvas 95%);*/
+/*}*/
+
+#main {
+    container-name: main;
+    container-type: inline-size;
+    /*height: calc((100vh - 50px) - 3rem);*/
+    display: grid;
+    gap: 1rem;
+
+    & .title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        & h1 {
+            color: var(--primary-color);
+            text-transform: uppercase;
+            font-size: 3.4rem;
+            margin: 0;
+        }
+    }
+
+    & .essentials {
+        display: grid;
+        gap: 1rem;
+        & section {
+            & h2, p {
+                margin: 0;
+            }
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: .5rem;
+        }
+    }
+}
+
+p {
+    /*max-width: ;*/
+}
+
+.quote {
+    padding-left: calc(var(--font-size) * 1.5)!important;
+    border-left: var(--border-width) solid var(--ButtonFace);
+}
+
+.chip {
+    padding-inline: .2rem;
+    border-radius: var(--border-radius);
+    display: inline!important;
+    background-color: var(--ButtonFace);
+}
+
+.codesandbox {
+    width: 100%;
+    height: 500px!important;
+    min-height: 500px;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 0 solid transparent;
+}
+
+:root {
+    --js-identifier: #0373c4;
+    --js-functions: #fc5347;
+    --js-objects: #a858fd;
+    --js-strings: #247930;
+    --js-comments: #59636e;
+    --code: #262626;
+}
+
+:root:has(#theme) {
+    --js-identifier: #0373c4;
+    --js-functions: #fc5347;
+    --js-objects: #a858fd;
+    --js-strings: #247930;
+    --js-comments: #59636e;
+    --code: #262626;
+}
+:root:has(#theme:checked) {
+    --js-identifier: #79C0FF;
+    --js-functions: #ff7b72;
+    --js-objects: #cea2fd;
+    --js-strings: #4e9458;
+    --js-comments: #59636e;
+    --code: #d7d7d7;
+}
+
+#main {
+    /*color: #fafafa;*/
+    /*background-image: url("./obs.png");*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /*background-blend-mode: luminosity;*/
+    backdrop-filter: opacity(.5);
+    /*& section {*/
+    /*    backdrop-filter: blur(2);*/
+    /*    background: rgba(0,0,0,.3);*/
+    /*    background-blend-mode: soft-light;*/
+    /*}*/
+}
+
+:root:has(#theme:checked) {
+    & code {
+        background: rgba(0,0,0,.5);
+    }
+}
+
+code {
+    font-family: monospace!important;
+    color: var(--code);
+    border-radius: var(--border-radius);
+    border: var(--border-width) solid var(--ButtonFace);
+    padding: 1rem;
+    background: #fafafa;
+    line-height: 1.5;
+    overflow-x: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    & pre {
+        font-family: monospace!important;
+        margin: 0;
+    }
+}
+
+
+/*::highlight(js-identifiers) { color: var(--js-identifier); }*/
+
+/*::highlight(js-functions) {*/
+/*    color: var(--js-functions);*/
+/*}*/
+
+/*::highlight(js-objects) {*/
+/*    color: #8915c2;*/
+/*}*/
+
+
+#principles {
+    margin-top: 1rem;
+    padding-top: 2rem;
+    & #principles-description {
+        max-width: 920px;
+        margin-inline: auto;
+    }
+}
+
+code {
+    font-family: monospace!important;
+}

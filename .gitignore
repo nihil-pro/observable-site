@@ -1,0 +1,14 @@
+/node_modules
+/dist
+
+# Coverage directory used by tools like istanbul
+.nyc_output
+
+# Log files
+*.log
+
+# JetBrains IDE
+.idea/
+
+# VSCode IDE
+.vscode

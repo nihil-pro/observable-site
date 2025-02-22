@@ -1,0 +1,442 @@
+:root {
+    --primary-color: #FC5822FF;
+    --warning-color: #eeba00;
+    --error-color: #fc3232;
+    --font-size: 1.2rem;
+    --border-width: 1px;
+    --border-radius: 8px;
+    --line-height: 1.3;
+    --control-padding: 4px;
+
+    /* Using variables with same names as system colors. This way, we can easily modify them,
+     and also we can use these concepts in web components */
+    --Canvas: Canvas;
+    --CanvasText: CanvasText;
+    --GrayText: GrayText;
+    --ButtonFace: color-mix(in srgb, var(--Canvas), var(--GrayText) 10%);
+    scroll-behavior: smooth;
+    color-scheme: light;
+}
+
+* { font-family: system-ui; -webkit-font-smoothing: antialiased; }
+html {
+    color-scheme: dark light;
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(40px + 1rem);
+}
+
+:root:has(#theme) { color-scheme: light;}
+:root:has(#theme:checked) { color-scheme: dark; }
+
+body {
+    margin: 0;
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+}
+
+* { box-sizing: border-box; }
+/* Typography */
+h1, h2, h3, h4, h5, h6, p { margin-block-start: 0; margin-block-end: 0 }
+h1 { font-size: calc(var(--font-size) * 3) }
+h2 { font-size: calc(var(--font-size) * 2) }
+h3 { font-size: calc(var(--font-size) * 1.5) }
+h4 { font-size: calc(var(--font-size) * 1.2) }
+h5 { font-size: calc(var(--font-size) * 1.1) }
+h6 { font-size: var(--font-size) }
+
+.h1 { font-size: calc(var(--font-size) * 3)!important; font-weight: bolder }
+.h2 { font-size: calc(var(--font-size) * 2)!important; font-weight: bolder }
+.h3 { font-size: calc(var(--font-size) * 1.5)!important; font-weight: bolder }
+.h4 { font-size: calc(var(--font-size) * 1.2)!important; font-weight: bolder }
+.h5 { font-size: calc(var(--font-size) * 1.1)!important; font-weight: bolder }
+.h6 { font-size: var(--font-size)!important; font-weight: bolder }
+
+a {
+    color: #0ca3fb;
+    text-decoration: underline;
+    text-decoration-color: color-mix(in srgb, #0ca3fb, transparent 80%);
+    text-decoration-thickness: 1px;
+    text-underline-offset: .175em;
+    text-decoration-skip: none;
+    text-decoration-skip-ink: none;
+    &:hover { text-decoration-color: currentColor; }
+}
+
+
+ul, ol { list-style: none; margin: 0; padding: 0 }
+
+/* Inputs and buttons default sizes */
+button, .button, ::file-selector-button, input, select, textarea,   .icon {
+    ---font-size: var(--font-size);
+    padding-inline: var(--control-padding);
+    padding-block: var(--control-padding);
+    font-size: var(---font-size);
+    border-radius: var(--border-radius);
+    border-width: var(--border-width);
+    &.large { ---font-size: calc(var(--font-size) + .2rem); }
+    &.small { ---font-size: calc(var(--font-size) - .2rem); }
+}
+
+button, .button, input[type="button"], ::file-selector-button {
+    padding-inline: calc(var(--control-padding) * 2);
+}
+
+select {
+    appearance: none;
+    background-color: var(--Canvas, Canvas);
+}
+
+input[type="range"] {
+    accent-color: var(--primary-color);
+    padding: 0!important;
+    margin: 0!important;
+    border: none!important;
+}
+
+/* This makes the file input size the same as other */
+input[type="file"] { padding: 0; border: none; }
+
+.icon, .button.icon {
+    /* making size the same as other inputs */
+    ---text-height: calc(var(--font-size) * var(--line-height));
+    ---left-and-right-border: calc(var(--border-width) * 2);
+    ---left-and-right-padding: calc(var(--control-padding) * 2);
+    aspect-ratio: 1;
+    display: grid;
+    place-content: center;
+    place-items: center;
+    border-radius: 100%;
+    width: calc( var(---text-height) + var(---left-and-right-border) + var(---left-and-right-padding) );
+    & > svg { color: currentColor; }
+}
+
+/* Inputs and buttons default styles and behavior */
+input::placeholder { color: var(--GrayText); }
+button, .button, ::file-selector-button, input, select, textarea {
+    border-style: solid;
+    border-radius: var(--border-radius);
+    border-width: var(--border-width);
+    border-color: var(--ButtonFace);
+    background-color: transparent;
+    outline: none;
+    &.loading { color: var(--GrayText); }
+    &:disabled { pointer-events: none; user-select: none; opacity: initial }
+}
+
+input, select, textarea {
+    position: relative;
+    &:disabled { color: var(--GrayText); border-color: var(--ButtonFace); }
+    &:hover:not(:focus-within,:invalid) { border-color: var(--GrayText); }
+    &:invalid { border-color: var(--error-color)!important; }
+    &:focus { border-color: var(--primary-color)!important; }
+}
+
+input[type="checkbox"], input[type="radio"] {
+    ---checkbox-radio-size: calc((var(--control-padding)) + var(---font-size));
+    background-color: var(--Canvas);
+    border-color: color-mix(in srgb, var(--ButtonFace), var(--CanvasText) 20%);
+    appearance: none;
+    height: var(---checkbox-radio-size);
+    width: var(---checkbox-radio-size);
+    min-width: var(---checkbox-radio-size);
+    margin: 0 0 -.1rem;
+    padding: 0;
+    border-radius: .3rem;
+    &:after { display: block; content: ""; height: 100%; width: 100%; }
+    &:checked { border-color: color-mix(in srgb, var(--primary-color), transparent 60%); }
+    &:checked:after { background-color: var(--primary-color); }
+    &:checked:hover { border-color: var(--primary-color); }
+    &:hover, + label:hover { cursor: pointer }
+    &:disabled +label { color: var(--GrayText); pointer-events: none };
+    &:disabled:checked { border-color: var(--ButtonFace); &:after { background-color: var(--ButtonFace); } }
+    &[type="radio"] { border-radius: 100% };
+    &[type="radio"]:checked:after { clip-path: circle(35% at 50% 50%); }
+    &[type="checkbox"]:checked:after { clip-path: polygon(25% 34%, 46% 55%, 83% 17%, 96% 21%, 46% 79%, 13% 46%); };
+}
+
+/* Inputs with labels, default styles and behavior */
+fieldset:has( > legend + select, textarea,   input:not([type="range"],[type="radio"],[type="checkbox"])) {
+    border-width: 0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    & legend {
+        font-size: calc(var(--font-size) / 1.4);
+        font-weight: 200;
+        pointer-events: none;
+        color: var(--GrayText);
+        line-height: 1;
+        position: absolute;
+        top: 0;
+        transform: translate(var(--border-radius), calc(calc(-1 * 100%) + .25rem));
+        padding-inline-end: 1px;
+        background-color: var(--Canvas);
+        z-index: 1;
+    }
+    &:disabled, &:has(> *:disabled) { cursor: not-allowed; & legend { color: var(--GrayText) } }
+    &:not(:invalid):has(> *:focus-within) { & legend { color: var(--primary-color) } }
+    &:has(> *:invalid) { & legend { color: var(--error-color) } }
+    &:has(> *.full-width) { width: 100%; }
+    &.full-width { & > *:not(legend) { width: 100% } }
+}
+
+/* Buttons colors and behavior */
+button, .button, input[type="button"] {
+    ---btn-color: var(--CanvasText);
+    ---btn-bg: var(--ButtonFace);
+    ---btn-border-color: var(--ButtonFace);
+    ---btn-darknes-color: color-mix(in srgb, var(---btn-bg), var(--CanvasText) 10%);
+    ---btn-lite-color: color-mix(in srgb, var(---btn-bg), transparent 80%);
+    text-decoration: none;
+    background-color: var(---btn-bg);
+    border-color: var(---btn-border-color);
+    color: var(---btn-color);
+    display: grid;
+    place-content: center;
+    place-items: center;
+    grid-auto-flow: column;
+    gap: var(--border-radius);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    &.primary {
+        ---btn-border-color:var(--primary-color);
+        ---btn-bg: var(--primary-color);
+        ---btn-color: #fafafa;
+    }
+    &.error {
+        ---btn-border-color:var(--error-color);
+        ---btn-bg: var(--error-color);
+        ---btn-color: #fafafa;
+    }
+    &.warning {
+        ---btn-border-color:var(--warning-color);
+        ---btn-bg: var(--warning-color);
+        ---btn-color: var(--CanvasText);
+    }
+    &:hover:not(:disabled, .lite, .outlined, .extra-lite) { background-color: color-mix(in srgb, var(---btn-bg), black 10%); }
+    &.lite, &.extra-lite, &.outlined {
+        &.primary { ---btn-color: var(--primary-color); }
+        &.warning { ---btn-color: var(--warning-color); }
+        &.error { ---btn-color: var(--error-color); }
+    }
+    &.outlined {
+        ---btn-border-color: color-mix(in srgb, var(---btn-color), transparent 85%);
+        ---btn-bg: transparent;
+        &:hover:not(:disabled) { ---btn-border-color: color-mix(in srgb, var(---btn-color), transparent 55%); }
+    }
+    &.lite {
+        ---btn-bg: color-mix(in srgb, var(---btn-color), transparent 85%);
+        &:not(.primary, .warning, .error) {
+            ---btn-bg: var(--ButtonFace);
+            &:hover:not(:disabled) { ---btn-bg: color-mix(in srgb, var(--ButtonFace), black 10%); }
+        }
+        ---btn-border-color: transparent;
+        &:hover:not(:disabled) { ---btn-bg: color-mix(in srgb, var(---btn-color), transparent 75%) }
+    }
+    /* should remove extra-lite class and use text instead */
+    &.extra-lite, &.text {
+        ---btn-border-color: transparent;
+        ---btn-bg: var(--Canvas);
+        &:hover:not(:disabled) { ---btn-bg: color-mix(in srgb, var(---btn-color), transparent 85%) }
+        &:not(.primary, .warning, .error) { &:hover:not(:disabled) { ---btn-bg: var(--ButtonFace); } }
+    }
+    &:disabled {
+        background-color: var(--ButtonFace);
+        border-color: var(--ButtonFace);
+        color: var(--GrayText);
+        & svg { color: var(--GrayText); }
+    }
+    &:hover:not(:disabled) { cursor: pointer;}
+    &:focus-within:not(:hover) {
+        box-shadow: 0 0 10px 0 color-mix(in srgb, var(---btn-color), transparent 75%);
+    }
+}
+
+/* Essentials */
+.paper {
+    background-color: var(--Canvas);
+    padding: var(--font-size);
+    &.outlined, &.with-border {
+        border-width: var(--border-width) ;
+        border-style: solid;
+        border-color: var(--ButtonFace);
+    }
+    &.rounded { border-radius: var(--font-size); }
+    &.elevation, &.with-shadow { box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px; }
+}
+
+.card {
+    ---card-internals-padding: calc(var(--font-size) / 1.5);
+    border-style: solid;
+    border-width: var(--border-width);
+    border-color: var(--Canvas);
+    &.with-border { border-color: var(--ButtonFace) }
+    &.outlined { border-color: var(--ButtonFace) }
+    &.elevation, &.with-shadow { box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px; }
+    &.rounded {
+        border-radius: var(--font-size);
+        & > :last-child {
+            border-bottom-left-radius: var(--font-size);
+            border-bottom-right-radius: var(--font-size);
+        }
+        & > :first-child {
+            border-top-left-radius: var(--font-size);
+            border-top-right-radius: var(--font-size);
+        }
+    }
+    & > header, > .header { padding: var(---card-internals-padding); }
+    & > .body { padding: var(---card-internals-padding); }
+    & > img, video, figure { aspect-ratio: 16 / 9; width: 100%; margin: 0 }
+    & > figure img, video { width: 100%; aspect-ratio: 16 / 9 }
+    & > footer, > .footer { padding: var(---card-internals-padding); }
+}
+/* alert, chip, lists */
+
+/* Base 12 columns grid */
+.grid {
+    container: auto / inline-size;
+    width: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: max-content;
+    /* Next lines are not for reading, they only provide breakpoints adaptability */
+    & > * { ---i: 1; grid-column: span var(---i) } /* first level child of a .grid */
+    & > .span-2 { ---i: 2 } & >.span-3 { ---i: 3 } & >.span-4 { ---i: 4 } & >.span-5 { ---i: 5 } & >.span-6 { ---i: 6 } & >.span-7 { ---i: 7 } & >.span-8 { ---i: 8 } & >.span-9 { ---i: 9 } & >.span-10 { ---i: 10 } & >.span-11 { ---i: 11 } & >.span-12 { ---i: 12 }
+    @container (width < 576px) { & > .xs-2 { ---i: 2 } & >.xs-3 { ---i: 3 } & >.xs-4 { ---i: 4 } & >.xs-5 { ---i: 5 } & >.xs-6 { ---i: 6 } & >.xs-7 { ---i: 7 } & >.xs-8 { ---i: 8 }; & >.xs-9 { ---i: 9 }; & >.xs-10 { ---i: 10 }; & >.xs-11 { ---i: 11 }; & >.xs-12 { ---i: 12 }; & >.xs-none { ---i: 0; display: none } }
+    @container (min-width: 576px) and (max-width: 767px) { & >.sm-2 { ---i: 2 } & >.sm-3 { ---i: 3 } & >.sm-4 { ---i: 4 } & >.sm-5 { ---i: 5 } & >.sm-6 { ---i: 6 } & >.sm-7 { ---i: 7 } & >.sm-8 { ---i: 8 } & >.sm-9 { ---i: 9 } & >.sm-10 { ---i: 10 } & >.sm-11 { ---i: 11 } & >.sm-12 { ---i: 12 }; & >.sm-none { ---i: 0; display: none } }
+    @container (min-width: 768px) and (max-width: 991px) { & >.md-2 { ---i: 2 } & >.md-3 { ---i: 3 } & >.md-4 { ---i: 4 } & >.md-5 { ---i: 5 } & >.md-6 { ---i: 6 } & >.md-7 { ---i: 7 } & >.md-8 { ---i: 8 } & >.md-9 { ---i: 9 } & >.md-10 { ---i: 10 } & >.md-11 { ---i: 11 } & >.md-12 { ---i: 12 } }
+    @container (min-width: 992px) and (max-width: 1199px) { & >.lg-2 { ---i: 2 } & >.lg-3 { ---i: 3 } & >.lg-4 { ---i: 4 } & >.lg-5 { ---i: 5 } & >.lg-6 { ---i: 6 } & >.lg-7 { ---i: 7 } & >.lg-8 { ---i: 8 } & >.lg-9 { ---i: 9 } & >.lg-10 { ---i: 10 } & >.lg-11 { ---i: 11 } & >.lg-12 { ---i: 12 } }
+    @container (min-width: 1200px) { & >.xl-2 { ---i: 2 } & >.xl-3 { ---i: 3 } & >.xl-4 { ---i: 4 } & >.xl-5 { ---i: 5 } & >.xl-6 { ---i: 6 } & >.xl-7 { ---i: 7 } & >.xl-8 { ---i: 8 } & >.xl-9 { ---i: 9 } & >.xl-10 { ---i: 10 } & >.xl-11 { ---i: 11 } & >.xl-12 { ---i: 12 } }
+}
+
+.flexible {
+    display: flex;
+    &.column { flex-direction: column; }
+    &.wrap { flex-wrap: wrap; }
+    &.align-end { align-items: end; }
+    &.align-center { align-items: center; }
+    &.align-stretch { align-items: stretch; }
+    &.justify-end { justify-content: end; }
+    &.justify-center { justify-content: center; }
+    &.justify-between { justify-content: space-between; }
+    &.justify-around { justify-content: space-around; }
+    &.justify-stretch { justify-content: stretch; }
+}
+
+/**/
+.toolbar {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: start;
+    width: 100%;
+    & > .toolbar-basis { flex-basis: 100% }
+    /*& > * { flex-basis: content }*/
+    &.align-end { align-items: end; }
+    &.align-center { align-items: center; }
+}
+
+.list {
+    ---list-item-padding: calc(var(--font-size) / 3);
+    width: 100%;
+    &.large { ---list-item-padding: calc(var(--font-size) / 2); }
+    & > .list-item {
+        &.rounded { border-radius: var(--border-radius) }
+        &.silent {}
+        &.disabled { background-color: var(--ButtonFace); cursor: not-allowed; user-select: none }
+        padding-inline: var(---list-item-padding);
+        padding-block: var(---list-item-padding);
+        &:not(.silent):hover { cursor: pointer; background-color: color-mix(in srgb, var(--Canvas), var(--GrayText) 8%); }
+        &.selected { background-color: color-mix(in srgb, var(--primary-color), transparent 90%); }
+        & > a, > a:hover { text-decoration: none; color: inherit; width: 100%; display: block }
+        & > svg { flex-shrink: 0 }
+    }
+}
+
+.horizontal-menu {
+    ---closed-width: calc(var(--font-size) + 24px);
+    ---open-width: 300px;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    transition: width 150ms ease-in-out;
+    width: var(---closed-width);
+    &.no-keep-word { word-break: break-word; white-space: break-spaces; }
+    &.open { width: var(---open-width); }
+    & > * { border-radius: var(--border-radius); }
+}
+
+.primary-color { color: var(--primary-color)!important; }
+.warning-color { color: var(--warning-color)!important; }
+.error-color { color: var(--error-color)!important; }
+
+.bg-primary, .bg-warning, .bg-error {
+    ---bg-color: var(--Canvas);
+    background-color: var(---bg-color);
+    &.lite { background-color: color-mix(in srgb, var(---bg-color), transparent 85%); }
+}
+.bg-primary { ---bg-color: var(--primary-color);}
+.bg-warning { ---bg-color: var(--warning-color) }
+.bg-error { ---bg-color: var(--error-color) }
+.bg-skeleton { background-color: var(--ButtonFace);}
+
+.border-primary { border-color: var(--primary-color)!important; }
+.border-warning { border-color: var(--warning-color)!important; }
+.border-error { border-color: var(--error-color)!important; }
+
+
+.skeleton { background-color: var(--ButtonFace) }
+
+/* end bite */
+
+/* Loader animation */
+@property --loading-border-angle { syntax: "<angle>"; inherits: true; initial-value: 0turn; }
+@property --loading-border-color { syntax: "<color>"; inherits: true; initial-value: GrayText; }
+@property --loading-background { syntax: "<color>"; inherits: true; initial-value: Canvas; }
+.loading {
+    ---bg: var(--loading-background, var(--Canvas));
+    ---main-bg: conic-gradient(from 0turn, var(---bg), var(---bg) 5%, var(---bg) 60%, var(---bg) 95%);
+    ---border: conic-gradient(from var(--loading-border-angle), var(--ButtonFace) 25%, transparent, var(--loading-border-color) 99%, transparent);
+    border-width: var(--border-width);
+    border-style: solid;
+    border-color: transparent!important;
+    background: var(---main-bg) padding-box, var(---border) border-box, var(---main-bg) border-box!important;
+    animation: bg-spin 3s linear infinite;
+}
+@keyframes bg-spin { to { --loading-border-angle: 1turn } }
+
+input, button, textarea,select, .paper, .card {
+    --loading-border-color: var(--primary-color);
+    --loading-background: var(--Canvas);
+}
+/* end loader animation */
+
+
+/* global */
+.full-page-height { min-height: calc(100vh - calc(55px + 1rem)) }
+.no-overflow { overflow: hidden; &:hover { overflow: visible } }
+.rounded { border-radius: var(--border-radius) }
+.with-small-space { gap: .5rem }
+.with-space { gap: 1rem }
+.with-large-space { gap: 1.5rem }
+.with-border { border-width: var(--border-width); border-style:solid; border-color: var(--ButtonFace) }
+.with-shadow { box-shadow: rgba(0, 0, 0, 0.1) 0 4px 12px; }
+.full-width { width: 100%!important; }
+.color-unset { color: var(--CanvasText)!important; }
+
+/* Base dialog styles */
+dialog {
+    overscroll-behavior: contain;
+    border-width: var(--border-width);
+    box-sizing: border-box;
+    border-color: transparent;
+    border-radius: var(--font-size);
+    padding: var(--font-size);
+    &::backdrop { background-color: rgba(0, 0, 0, 0.5); }
+    &.extra-small { max-width: 576px; width: 100% }
+    &.small { max-width: 768px; width: 100% }
+    &.medium { max-width: 992px; width: 100% }
+    &.large { max-width: 1200px; width: 100% }
+    &::-webkit-scrollbar { display: none }
+}
