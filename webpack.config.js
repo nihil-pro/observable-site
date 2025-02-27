@@ -1,5 +1,6 @@
 import * as path from 'node:path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export default {
@@ -16,7 +17,14 @@ export default {
     }
   },
   plugins: [
-    new HtmlWebpackPlugin({ template: path.resolve('public', 'index.html') })
+    new HtmlWebpackPlugin({ template: path.resolve('public', 'index.html') }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "./public/bite.css", to: "." },
+        { from: "./public/index.css", to: "." },
+        { from: "./public/service.worker.js", to: "." },
+      ],
+    })
   ],
   performance: {
     hints: false,

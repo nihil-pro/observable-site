@@ -3,27 +3,43 @@ import { Highlighter } from '../Highliter';
 
 const react = `// React.js
 const [state, setState] = useState({ foo: 'bar' });
-setState({foo: 'baz'})
+setState(prev => ({ ...prev, foo: 'baz' }))
 
 // Solid.js
 const [state, setState] = createStore({ foo: 'bar' });
-setState({foo: 'baz'})
+setState(prev => ({ ...prev, foo: 'baz' }))
 
 // Zustand
 const { getState, setState } = createStore((set) => ({ foo: 'bar' }))
-setState({foo: 'baz'})
+setState(prev => ({ ...prev, foo: 'baz' }))
 
 // Mobx
 const state = observable({ foo: 'bar' })
-action(() => state.foo = 'baz') // "action" is another form of "setter"
+// "action" is another form of "setter"
+action(() => state.foo = 'baz')
 `
 
-const observable = `const state = new class extends Observable {
-  foo = 'bar'
+const observable = `class State extends Observable {
+  static staticProperty = []
+  #privateProperty = ''
+  publicProperty = ''
+  
+  publicMethod() {
+     // ...
+  }
+  
+  #privateMethod() {
+    // ...
+  }
+  
+  async #privateAsyncMethod() {
+     // ...
+  }
+  
+  static async method() {
+    // ...
+  }
 }
-
-state.foo = 'baz' // set
-console.log(state.foo) // read
 `
 
 const makeObservable = `const state = makeObservable({ foo: 'bar' })
@@ -32,48 +48,47 @@ state.foo = 'baz' // set
 console.log(state.foo) // read
 `
 
-const preferClasses= 'https://github.com/nihil-pro/kr-observable/wiki/Why-is-it-better-to-use-classes%3F'
+const preferClasses = 'https://github.com/nihil-pro/kr-observable/wiki/Why-is-it-better-to-use-classes%3F'
 
 
 export function Principles() {
   return (
-    <div id="principles" className='paper rounded with-shadow with-border flexible column with-large-space'>
-      <div id="principles-description" className="flexible column with-space">
+    <div id="least-boilerplate" className='paper rounded with-border no-padding flexible column with-space'>
+      <div className="flexible column with-space paper">
         <h3>Least boilerplate</h3>
-        <div className="flexible column with-small-space">
+        <div className='flexible column with-small-space'>
           <p>
-            It is achieved by fact, that You are able to mutate the state from anywhere and however you want.
-          </p>
-          <p>
-            All known libraries for state management use the concept of getter/setter pair:
+            It&nbsp;is&nbsp;achieved by&nbsp;fact, that You are able to&nbsp;mutate the state from anywhere and however
+            you want.
           </p>
         </div>
-        <div className="flexible with-space align-center">
-          <code className="full-width">
-          <pre ref={Highlighter.highlight}>
-            {react}
-          </pre>
-          </code>
-        </div>
-        <div className="flexible column with-small-space">
-          <p>Observable – doesn't.</p>
-          <p>It is a normal JavaScript object, and you can work with it as you would normally:</p>
-        </div>
-        <code>
-            <pre ref={Highlighter.highlight}>
-              {observable}
-            </pre>
-        </code>
+      </div>
+      <code className="flexible column with-small-space">
+        <b>Observable</b>
+        <pre ref={Highlighter.highlight}>
+          {makeObservable}
+        </pre>
+      </code>
+      <code className='flexible column with-small-space'>
+        <b>Others</b>
+        <pre ref={Highlighter.highlight}>
+          {react}
+        </pre>
+      </code>
+      <div className="flexible column with-small-space paper">
         <p>
-          If you don't like classes, you can use plain objects as well:
+          Also, many of&nbsp;known libraries can work only with plain objects,
+          but with Observable you can use the power of&nbsp;ES6&nbsp;classes.
         </p>
-        <code>
-            <pre ref={Highlighter.highlight}>
-              {makeObservable}
-            </pre>
-        </code>
+      </div>
+      <code>
+        <pre ref={Highlighter.highlight}>
+          {observable}
+        </pre>
+      </code>
+      <div className='paper'>
         <p>
-          But classes are <a href={preferClasses}>much cooler</a>!
+          Classes are <a href={preferClasses}>much cooler</a>!
         </p>
       </div>
     </div>

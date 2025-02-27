@@ -11,11 +11,11 @@
     /* Using variables with same names as system colors. This way, we can easily modify them,
      and also we can use these concepts in web components */
     --Canvas: Canvas;
-    --CanvasText: CanvasText;
+    --CanvasText: color-mix(in srgb, CanvasText, Canvas 10%);;
     --GrayText: GrayText;
     --ButtonFace: color-mix(in srgb, var(--Canvas), var(--GrayText) 10%);
     scroll-behavior: smooth;
-    color-scheme: light;
+    /*color-scheme: light;*/
 }
 
 * { font-family: system-ui; -webkit-font-smoothing: antialiased; }
@@ -25,9 +25,11 @@ html {
     scroll-padding-top: calc(40px + 1rem);
 }
 
-:root:has(#theme) { color-scheme: light;}
-:root:has(#theme:checked) { color-scheme: dark; }
-
+/*:root:has(#theme) { color-scheme: light;}*/
+/*:root:has(#theme:checked) { color-scheme: dark; }*/
+@media (prefers-color-scheme: dark) {
+    --Canvas: #f0f6fc;
+}
 body {
     margin: 0;
     font-size: var(--font-size);
@@ -107,7 +109,7 @@ input[type="file"] { padding: 0; border: none; }
     place-items: center;
     border-radius: 100%;
     width: calc( var(---text-height) + var(---left-and-right-border) + var(---left-and-right-padding) );
-    & > svg { color: currentColor; }
+    & > svg { color: currentColor; height: var(--font-size); width: var(--font-size) }
 }
 
 /* Inputs and buttons default styles and behavior */

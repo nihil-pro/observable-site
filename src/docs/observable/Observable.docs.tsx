@@ -62,33 +62,36 @@ export function ObservableDocs() {
   return (
     <div id='Observable' className='flexible column with-large-space'>
       <div className="flexible column with-space">
-        <h3>Observable</h3>
-        <p>
-          Observable is a class that all your classes should inherit, to get reactivity power.<br/>
-          As a result:
-        </p>
-        <div className="flexible column with-small-space">
-          <p>– All own properties become observable, including those that will be added later;</p>
-          <p>– Any value which type is <em>Array</em>, <em>Map</em>, <em>Set</em> or <a href={plain}>plain object</a> become deep observable;</p>
-          <p>– All getters become computed;</p>
-          <p>– All methods become <a href={bound}>bound</a> to instance;</p>
-          <p>– <a href={privateProperties}>Private</a> properties and methods are allowed;</p>
-          <p>– Subclassing (<a href={inheritance}>inheritance</a>) is allowed;</p>
+        <div className="paper flexible column with-space">
+          <h4 className="primary-color thin-text">Observable</h4>
+          <p>
+            A class that all your classes should inherit, to get reactivity power.<br/>
+          </p>
+          <div className="flexible column with-small-space">
+            As a result:<br/>
+            <p>– All own properties become observable, including those that will be added later;</p>
+            <p>– Any value which type is <em>Array</em>, <em>Map</em>, <em>Set</em> or <a href={plain}>plain
+              object</a> become deep observable;</p>
+            <p>– All getters become computed;</p>
+            <p>– All methods become <a href={bound}>bound</a> to instance;</p>
+            <p>– <a href={privateProperties}>Private</a> properties and methods are allowed;</p>
+            <p>– Subclassing (<a href={inheritance}>inheritance</a>) is allowed;</p>
+          </div>
+          <p id="no-redefine">
+            Herewith – Observable don't redefine properties and don't convert them to getter/setter pair. <br/>
+            An instance of <em>Observable</em> instance is still a normal javascript object.
+          </p>
         </div>
-        <p id='no-redefine'>
-          Herewith – Observable don't redefine properties and don't convert them to getter/setter pair. <br/>
-          Observable instance is still a normal javascript object.
-        </p>
-        <h5>Syntax</h5>
-        <code>
-            <pre ref={Highlighter.highlight}>
+        <code className="flexible column with-small-space">
+          <b>Syntax</b>
+          <pre ref={Highlighter.highlight}>
               {ObservableSyntax}
             </pre>
         </code>
       </div>
 
-      <div className="flexible column with-space">
-      <h5 id="#observable-instance-methods">Instance methods</h5>
+      <div className="flexible column with-space paper">
+        <h5 id="#observable-instance-methods">Instance methods</h5>
         <details id="subscribe">
           <summary>subscribe</summary>
           <div className="paper quote flexible column with-large-space">
@@ -264,7 +267,7 @@ export function ObservableDocs() {
         </details>
       </div>
 
-      <div className="flexible column with-space">
+      <div className="flexible column with-space paper">
         <h5 id="#observable-properties">Instance properties</h5>
         <details>
           <summary>ignore</summary>
@@ -285,14 +288,16 @@ export function ObservableDocs() {
         </details>
       </div>
 
-      <div className='flexible column with-small-space'>
+      <div className='flexible column with-small-space paper'>
         <h5>Restrictions</h5>
         <p>
           <a href="#subscribe">subscribe</a>, <a href="#unsubscribe">unsubscribe</a>, <a href="#listen">listen</a> and <a href="#unlisten">unlisten</a> are <em>readonly</em> methods. <br/>
           You can't redefine or overwrite them.
         </p>
       </div>
-      <div>See also: <a href='#examples'>examples</a></div>
+      <div className='paper'>
+        <div>See also: <a href='#examples'>examples</a></div>
+      </div>
     </div>
   )
 }

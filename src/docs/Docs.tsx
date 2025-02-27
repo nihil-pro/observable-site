@@ -5,22 +5,17 @@ import { ObserverDocs } from './observer/Observer.docs';
 
 export function Docs() {
   return (
-    <main id="docs" className="flexible column with-large-space">
-      <div className='paper with-border rounded'>
-        <ObservableDocs/>
+    <main id="docs" className="paper with-border rounded no-padding flexible column with-space">
+      <div className='paper'>
+        <h6>Api</h6>
       </div>
-
-      <div className='paper with-border rounded'>
-        <MakeObservableDocs/>
-      </div>
-
-      <div className='paper with-border rounded'>
-        <AutorunDocs/>
-      </div>
-
-      <div className='paper with-border rounded'>
-        <ObserverDocs/>
-      </div>
+      <ObservableDocs/>
+      <hr/>
+      <MakeObservableDocs/>
+      <hr/>
+      <AutorunDocs/>
+      <hr/>
+      <ObserverDocs/>
     </main>
   )
 }

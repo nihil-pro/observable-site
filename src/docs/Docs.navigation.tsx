@@ -1,25 +1,19 @@
-import { Observable, observer } from 'kr-observable';
-import { MouseEvent } from 'react';
-
-class NavState extends Observable {
-  paths = ["Observable", "makeObservable", "autorun", "observer"]
-  selected = ""
-
-  select(event: MouseEvent) {
-    if (event.target instanceof HTMLLIElement) {
-      this.selected = event.target.id
-    }
-    console.log(location.hash.replace('#', ''))
-  }
-}
-
-const navState = new NavState()
-
-export const DocsNavigation = observer(function docsNav(){
+export function DocsNavigation(){
   return (
-    <div className='flexible column with-space' style={{ position: 'sticky', top: 'calc(50px + 1rem)' }}>
-      <h2>Api</h2>
-      {navState.paths.map(path => <a href={`#${path}`} key={path}>{path}</a>)}
+    <div className='flexible column with-large-space' style={{ position: 'sticky', top: 'calc(50px + 1rem)' }}>
+      <div className="flexible column with-small-space">
+        <h6>Api</h6>
+        {[ 'Observable', 'makeObservable', 'autorun', 'observer' ].map(path => {
+          return <a href={`#${path}`} key={path}>{path}</a>;
+        })}
+      </div>
+
+      <div className="flexible column with-small-space">
+        <h6>Concepts</h6>
+        {[ "Batching", "computed" ].map(path => {
+          return <a href={`#${path}`} key={path}>{path}</a>;
+        })}
+      </div>
     </div>
   )
-})
+}

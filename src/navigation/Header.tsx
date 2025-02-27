@@ -1,17 +1,22 @@
 import { ThemeToggle } from './Theme.toggle';
+import { GithubIcon } from './Github.icon';
+
+function scrollToTop() {
+  document.documentElement.scrollIntoView( { block: 'start', behavior: 'smooth' })
+}
 
 export function Header() {
   return (
-    <nav className='paper rounded with-shadow with-border flexible justify-between align-center'>
-      <div>
-        🔝
+    <nav className='flexible justify-between align-center'>
+      <div style={{ cursor: 'pointer' }} className="h5 primary-color" onClick={scrollToTop}>
+        Observable
       </div>
-      <div className="flexible align-center with-space">
-        <a href='#'>GitHub</a>
-        <a href='#docs'>Docs</a>
-        <a href='#examples'>Examples</a>
+      <div className='flexible with-space align-center'>
+        <a style={{ color: 'CanvasText' }} className='icon extra-lite' href='https://github.com/nihil-pro/kr-observable'>
+          <GithubIcon/>
+        </a>
+        {/*<ThemeToggle/>*/}
       </div>
-      <ThemeToggle />
     </nav>
   )
 }

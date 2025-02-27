@@ -10,10 +10,12 @@ class State extents Observable {
 
 const state = new State()
 
-function effect() {
-  console.log('effect was executed')
+// should be invoked when a, b or c changes
+function reaction() {
+  console.log('run reaction')
 }
 
+// will log all changes is state
 function listener(property) {
   console.log(property, ' where changed')
 }
@@ -21,6 +23,7 @@ function listener(property) {
 state.listen(listener)
 state.subscribe(effect, new Set(['a', 'b', 'c']))
 
+// will emulate async requests
 function delay() {
   return new Promise((resolve) => {
     setTimeout(() => resolve(2), 50)
@@ -64,43 +67,34 @@ change()
 
 export function Batching() {
   return (
-    <div className='paper rounded with-shadow with-border flexible column with-large-space'>
-      <h3>Batching</h3>
-      <p>
-        Batching is a mechanism that allows to run <em>effect</em> only once, for changes that were made almost at the
-        same time.<br/>
-        ☞ <em>Effect</em> is a function which were passed to <a href='#subscribe'>subscribe</a>, <a href='#autorun'>autorun</a> or <a href='#observer'>observer</a>.
-      </p>
-
-      <div className="grid with-large-space">
-        <div className="xl-4 lg-4 md-4 sm-12 xs-12 flexible column with-space">
-          <p>
-            Let's make some preparations before we get into how it works.
-          </p>
-          <p>
-            We'll need:<br/>
-            – An observable with three properties: <em>a</em>, <em>b</em> and <em>c</em><br/>
-            – A listener which will log all changes<br/>
-            – A subscriber which should be invoked when <em>a</em>, <em>b</em> or <em>c</em> changes<br/>
-            – A delay function which will emulate async requests
-          </p>
-          <p>
-            Finally we'll change the <em>a</em>, <em>b</em> and <em>c</em> on a change function in different ways.
-          </p>
-        </div>
-        <code className="xl-8 lg-8 md-8 sm-12 xs-12">
-          <pre ref={Highlighter.highlight}>
-            {syncBatch}
-          </pre>
-        </code>
+    <div id='Batching' className='paper rounded no-padding with-border flexible column with-space'>
+      <div className="paper flexible column with-space">
+        <h3>Batching</h3>
+        <p>
+          Batching allows to&nbsp;invoke <em>Reaction</em>&nbsp;&mdash; only once,
+          for changes that were made <em>almost</em> at&nbsp;the same time.
+        </p>
+        <p>
+        ☞ Any function which were passed to <a href="#subscribe">subscribe</a>, <a href="#autorun">autorun</a> or <a href="#observer">observer</a> is called <em>Reaction</em>.
+        </p>
+        <p>Let&rsquo;s make some preparations before we&nbsp;get into how it&nbsp;works.</p>
+      </div>
+      <code className="full-width">
+        <pre ref={Highlighter.highlight}>
+          {syncBatch}
+        </pre>
+      </code>
+      <div className="paper">
+        <p>
+          Now we&rsquo;ll change state in&nbsp;different ways to&nbsp;understand and control &laquo;batching&raquo;.
+        </p>
       </div>
 
       <div className="grid with-space">
-
-        <code className="xl-6 lg-6 md-12 sm-12 xs-12 grid with-space ">
+        <code className="span-12 grid with-small-space ">
           <div className="span-12">
             <small>
-              Changes are made at same time, and effect will run once.
+              Here changes are made at same time, and reaction will run once
             </small>
           </div>
           <pre className="xl-6 lg-6 md-6 sm-6 xs-12" ref={Highlighter.highlight}>{syncChange}</pre>
@@ -109,15 +103,15 @@ export function Batching() {
             a were changed<br/>
             b were changed<br/>
             c were changed<br/>
-            🔥 effect was executed<br/>
+            run reaction 👌
           </pre>
         </code>
-
-        <code className="xl-6 lg-6 md-12 sm-12 xs-12 grid with-large-space">
+        <code className="span-12 grid with-small-space">
           <div className="span-12">
             <small>
-              Async function with await statement, but since changes starts after promise is resolved,
-              they are made at same time, and effect will run once.
+              Here changes are made in&nbsp;an&nbsp;async function with await statement,
+              but since changes starts after promise is&nbsp;resolved,
+              they are made at&nbsp;same time, and effect will run once
             </small>
           </div>
           <pre className="xl-6 lg-6 md-6 sm-6 xs-12" ref={Highlighter.highlight}>{async1awaitChange}</pre>
@@ -126,54 +120,57 @@ export function Batching() {
             a were changed<br/>
             b were changed<br/>
             c were changed<br/>
-            🔥 effect was executed<br/>
+            run reaction 👌
           </pre>
         </code>
-      </div>
-      <div className='grid'>
-        <div className='xl-4 lg-4 md-12 sm-12 xs-12 paper flexible column with-space'>
-          <p>Why <em>effect</em> is invoked twice?</p>
-          <p>
-            Because assignment value to "b" property is deferred by "await" statement to the next tick,
-            but changes are considered made at the same time, if they happen in the same tick.
-          </p>
-          <p>Now that we understand how batching works, we can easy control it.</p>
-          <p>Let's fix that</p>
-        </div>
-        <code className="xl-8 lg-8 md-12 sm-12 xs-12 grid with-large-space">
+        <code className="span-12 grid with-small-space">
           <div className="span-12">
             <small>
-              Async function with two or more await statements.
+              Here changes are made in&nbsp;an&nbsp;async function with <b>more</b> than one await statement during
+              assignment
             </small>
           </div>
           <pre className="xl-6 lg-6 md-6 sm-6 xs-12" ref={Highlighter.highlight}>{async2awaitChange}</pre>
           <pre className="xl-6 lg-6 md-6 sm-6 xs-12">
             Log:<br/>
             a were changed<br/>
-            🔥 effect was executed<br/>
+            🔥 run reaction 🔥<br/>
             b were changed<br/>
             c were changed<br/>
-            🔥 effect was executed<br/>
+            run reaction 👌
           </pre>
         </code>
-      </div>
-
-      <div className='grid'>
-        <code className="xl-8 lg-8 md-12 sm-12 xs-12 grid with-large-space">
+        <div className="span-12 paper flexible column with-space">
+          <p>Why <em>Reaction</em> was invoked twice?</p>
+          <p>
+            That&rsquo;s because assignment value to&nbsp;property &laquo;b&raquo;,
+            was deferred by&nbsp;&laquo;await&raquo; statement to&nbsp;the <b>next tick</b>,
+            but changes are considered made at&nbsp;the same time,
+            if&nbsp;they happen in&nbsp;the <b>same tick</b>.
+          </p>
+          <p>Now that we&nbsp;understand how batching works, we&nbsp;can easy control&nbsp;it.</p>
+          <p>Let's fix that</p>
+        </div>
+        <code className="span-12 grid with-small-space">
+          <div className="span-12">
+            <small>
+              Here we wait until promises resolves, and then make changes
+            </small>
+          </div>
           <pre className="xl-6 lg-6 md-6 sm-6 xs-12" ref={Highlighter.highlight}>{async2awaitFixedChange}</pre>
           <pre className="xl-6 lg-6 md-6 sm-6 xs-12">
             Log:<br/>
             a were changed<br/>
             b were changed<br/>
             c were changed<br/>
-            🔥 effect was executed<br/>
+            run reaction 👌
           </pre>
         </code>
-
-        <div className='xl-4 lg-4 md-12 sm-12 xs-12 paper flexible column with-space'>
-          <p>☞ Nothing break if you won't control batching</p>
+        <div className='span-12 paper flexible column with-space'>
+          <p>☞ Nothing break if&nbsp;you won&rsquo;t control batching</p>
           <p>
-            But understanding how it works will help reduce the number of <em>unnecessary</em> renders to zero, for example.
+            But knowledge how it&nbsp;works, can help you, for example,
+            to&nbsp;reduce the number of&nbsp;<em>unnecessary</em> renders in&nbsp;React to&nbsp;zero.
           </p>
         </div>
       </div>
