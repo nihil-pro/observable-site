@@ -4,9 +4,12 @@ import { Docs } from './docs/Docs';
 import { Main } from './Main';
 import { DocsNavigation } from './docs/Docs.navigation';
 import { Principles } from './principles/Principles';
-import { Batching } from './batching/Batching';
+import { Batching } from './concepts/batching/Batching';
 import { Footer } from './navigation/Footer';
-import { Computed } from './computed/Computed.docs';
+import { Computed } from './concepts/computed/Computed.docs';
+import { Notifier } from 'light-notifier'
+import { Concepts } from './concepts/Concepts';
+new Notifier()
 
 
 export function App() {
@@ -31,9 +34,7 @@ export function App() {
             <hr/>
             <Docs/>
             <hr/>
-            <Batching/>
-            <hr/>
-            <Computed />
+            <Concepts />
             <hr/>
             <Principles/>
           </section>

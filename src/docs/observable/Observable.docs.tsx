@@ -51,6 +51,17 @@ class User extends Observable {
 }
 const user = new User()
 `
+
+const serializable = `class State extends Observable {
+  foo = 'bar'
+}
+
+const state = new State()
+const plain = JSON.parse(JSON.stringify(state)) 
+console.log(JSON.stringify(state))
+console.log(plain, plain instanceof Observable)
+`
+
 const privateProperties = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_properties'
 const bound = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind'
 const inheritance = 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#inheritance'
@@ -62,24 +73,10 @@ export function ObservableDocs() {
   return (
     <div id='Observable' className='flexible column with-large-space'>
       <div className="flexible column with-space">
-        <div className="paper flexible column with-space">
+        <div className="paper no-padding-bottom flexible column with-space">
           <h4 className="primary-color thin-text">Observable</h4>
           <p>
             A class that all your classes should inherit, to get reactivity power.<br/>
-          </p>
-          <div className="flexible column with-small-space">
-            As a result:<br/>
-            <p>– All own properties become observable, including those that will be added later;</p>
-            <p>– Any value which type is <em>Array</em>, <em>Map</em>, <em>Set</em> or <a href={plain}>plain
-              object</a> become deep observable;</p>
-            <p>– All getters become computed;</p>
-            <p>– All methods become <a href={bound}>bound</a> to instance;</p>
-            <p>– <a href={privateProperties}>Private</a> properties and methods are allowed;</p>
-            <p>– Subclassing (<a href={inheritance}>inheritance</a>) is allowed;</p>
-          </div>
-          <p id="no-redefine">
-            Herewith – Observable don't redefine properties and don't convert them to getter/setter pair. <br/>
-            An instance of <em>Observable</em> instance is still a normal javascript object.
           </p>
         </div>
         <code className="flexible column with-small-space">
@@ -87,6 +84,34 @@ export function ObservableDocs() {
           <pre ref={Highlighter.highlight}>
               {ObservableSyntax}
             </pre>
+        </code>
+        <div className="paper">
+          <div className="flexible column with-small-space">
+            As a result:<br/>
+            <p>– All own properties become observable, including those that will be added later;</p>
+            <p>– Any value which type is <em>Array</em>, <em>Map</em>, <em>Set</em> or <a href={plain}>plain
+              object</a> become deep observable;</p>
+            <p>– All getters become <a href="#computed">computed</a>;</p>
+            <p>– All methods become <a href={bound}>bound</a> to instance;</p>
+            <p>– <a href={privateProperties}>Private</a> properties and methods are allowed;</p>
+            <p>– Subclassing (<a href={inheritance}>inheritance</a>) is allowed;</p>
+          </div>
+        </div>
+        <div className="paper no-padding-bottom">
+          <p id="no-redefine">
+            ☞ An instance of <em>Observable</em> is still a normal javascript object,
+            which properties weren't redefined, converted to&nbsp;getter/setter pair or to something like Signal, Atom etc.
+          </p>
+        </div>
+        <code className="flexible column with-small-space">
+          <pre ref={Highlighter.highlight}>
+              {serializable}
+            </pre>
+          <pre className="xl-6 lg-6 md-6 sm-6 xs-12">
+            Log:<br/>
+            {`{"foo":"bar"}`}<br/>
+            <pre ref={Highlighter.highlight}>{`{foo: 'bar'}`} false</pre>
+          </pre>
         </code>
       </div>
 
@@ -147,7 +172,7 @@ export function ObservableDocs() {
               </div>
             </div>
             <div className="flexible column with-small-space">
-            <b>Return value</b>
+              <b>Return value</b>
               <p className='primary-color'>undefined</p>
             </div>
             <div className="flexible column with-small-space">
@@ -183,7 +208,7 @@ export function ObservableDocs() {
               </div>
             </div>
             <div className="flexible column with-small-space">
-            <b>Return value</b>
+              <b>Return value</b>
               <p className='primary-color'>undefined</p>
             </div>
           </div>
@@ -273,8 +298,10 @@ export function ObservableDocs() {
           <summary>ignore</summary>
           <div id='ignore' className="quote paper flexible column with-large-space">
             <p>
-              A <a href={staticProperties}>static</a> property which contains an array of properties in target Observable that should be ignored. <br/>
-              These properties won't be made observable. <a href="#listener">Listeners</a> and <a href="#subscriber">subscribers</a> won't be notified about changes.
+              A <a href={staticProperties}>static</a> property which contains an array of properties in target
+              Observable that should be ignored. <br/>
+              These properties won't be made observable. <a href="#listener">Listeners</a> and <a
+              href="#subscriber">subscribers</a> won't be notified about changes.
             </p>
             <div className="flexible column with-small-space">
               <b>Syntax</b>
@@ -291,7 +318,8 @@ export function ObservableDocs() {
       <div className='flexible column with-small-space paper'>
         <h5>Restrictions</h5>
         <p>
-          <a href="#subscribe">subscribe</a>, <a href="#unsubscribe">unsubscribe</a>, <a href="#listen">listen</a> and <a href="#unlisten">unlisten</a> are <em>readonly</em> methods. <br/>
+          <a href="#subscribe">subscribe</a>, <a href="#unsubscribe">unsubscribe</a>, <a
+          href="#listen">listen</a> and <a href="#unlisten">unlisten</a> are <em>readonly</em> methods. <br/>
           You can't redefine or overwrite them.
         </p>
       </div>

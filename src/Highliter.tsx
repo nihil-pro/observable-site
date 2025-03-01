@@ -1,3 +1,5 @@
+import { UiNotification } from 'light-notifier'
+
 const identifiers = [
   "async", "break", "class", "const", "continue", "debugger", "do", "while", "export", "for", "of", "in",
   "function", "if", "else", "let", "return", "switch", "throw", "try", "catch", "var", "while", "extends",
@@ -5,14 +7,30 @@ const identifiers = [
   "true", "false", "null", "undefined", "static", "default"
 ]
 
+const unsupported = `Your browser doesn't support code highlighting. Please try another.`
+
 export class Highlighter {
   static #inserted = new Set<string>()
   static registry = 0
   static #identifiers = identifiers
   static #classes: string[] = ["Observable"]
+  static #notificationShown = false
+
 
   static highlight = (ref: HTMLElement | null) => {
-    if (!ref || typeof Highlight === 'undefined') { return; }
+    if (!ref || typeof Highlight === 'undefined') {
+      if (!this.#notificationShown) {
+        setTimeout(() => {
+          new UiNotification()
+            .setMessage(unsupported)
+            .warning()
+            .setAutoHideDurationInMs(3000)
+            .show()
+        },1000)
+        this.#notificationShown = true
+      }
+      return;
+    }
     const walker = document.createTreeWalker(ref, NodeFilter.SHOW_TEXT)
     const nodes: Node[] = []
     let current = walker.nextNode()
@@ -22,8 +40,8 @@ export class Highlighter {
     }
     const content = ref.textContent || ''
     this.#highlightIdentifiers(content, nodes, ref)
-    this.#highlightFunctions(content, nodes, ref)
     this.#highlightObjects(content, nodes, ref)
+    this.#highlightFunctions(content, nodes, ref)
     this.#highlightValues(content, nodes, ref)
     this.#highlightComments(content, nodes, ref)
   }
@@ -114,8 +132,9 @@ export class Highlighter {
   static #highlightObjects = (content: string, nodes: Node[], ref: HTMLElement) => {
     // \w*[.{1}](?:(?!\w).)*
     // \w*[.{1}]\w
-    const maybeObjects = content.matchAll(/[a-zA-Z]+[.{1}](?:(?!\w).)*/g)
+    const maybeObjects = content.matchAll(/[a-zA-Z]+[.](?:(?!\w).)*/g)
     const _objects: string[] = []
+    console.log(_objects)
     for (const result of maybeObjects) {
       _objects.push(result[0].replace('.',''))
     }

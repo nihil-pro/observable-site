@@ -1,13 +1,7 @@
-:root {
-    --js-identifiers: #0373c4;
-    --js-functions: #fc5347;
-    --js-objects: #a858fd;
-    --js-strings: #247930;
-    --js-comments: #59636e;
-    --code: color-mix(in srgb, CanvasText, Canvas 20%);
-}
+
 p {
     text-wrap-style: pretty;
+    line-height: 1.5;
 }
 small {
     font-size: 1rem;
@@ -32,24 +26,6 @@ nav {
     border-left: var(--border-width) solid var(--ButtonFace);
 }
 
-@media(prefers-color-scheme: dark) {
-    --js-identifiers: #79C0FF;
-    --js-functions: #ff7b72;
-    --js-objects: #cea2fd;
-    --js-strings: #4e9458;
-    --js-comments: #59636e;
-    --code: #d7d7d7;
-}
-
-@media(prefers-color-scheme: light) {
-    --js-identifiers: #0373c4;
-    --js-functions: #fc5347;
-    --js-objects: #a858fd;
-    --js-strings: #247930;
-    --js-comments: #59636e;
-    --code: color-mix(in srgb, CanvasText, Canvas 20%);
-}
-
 code {
     font-family: monospace!important;
     color: var(--code);
@@ -68,6 +44,10 @@ code {
         font-family: monospace!important;
         margin: 0;
     }
+}
+
+.no-padding-bottom {
+    padding-bottom: .5rem;
 }
 
 #principles {
@@ -115,3 +95,5 @@ hr {
     margin: 0 0;
     width: 100%;
 }
+
+.ui-notification.warning { color: #545454; }

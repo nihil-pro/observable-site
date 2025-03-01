@@ -1,4 +1,4 @@
-import { Highlighter } from '../Highliter';
+import { Highlighter } from '../../Highliter';
 
 const syncBatch = `import { Observable } from 'kr-observable'
 
@@ -67,7 +67,7 @@ change()
 
 export function Batching() {
   return (
-    <div id='Batching' className='paper rounded no-padding with-border flexible column with-space'>
+    <div id='Batching' className='flexible column with-space'>
       <div className="paper flexible column with-space">
         <h3>Batching</h3>
         <p>
@@ -134,7 +134,7 @@ export function Batching() {
           <pre className="xl-6 lg-6 md-6 sm-6 xs-12">
             Log:<br/>
             a were changed<br/>
-            🔥 run reaction 🔥<br/>
+            run reaction 🔥🔥 <br/>
             b were changed<br/>
             c were changed<br/>
             run reaction 👌

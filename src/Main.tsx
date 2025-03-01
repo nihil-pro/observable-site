@@ -42,6 +42,19 @@ export function Main() {
           <small>Demo on codesandbox</small>
         </a>
       </div>
+      <div className='paper flexible with-small-space wrap'>
+        <a href="https://www.npmjs.com/package/kr-observable" rel="nofollow">
+          <img
+          src="https://camo.githubusercontent.com/63bbb9388d15a8b5d7ebf0e1cc33792be4a884609de53c117a18c612f4778eda/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f6b722d6f627365727661626c65"
+          alt="npm" data-canonical-src="https://img.shields.io/npm/v/kr-observable" />
+        </a>
+        <a href="https://bundlephobia.com/package/kr-observable" rel="nofollow">
+          <img src="https://github.com/nihil-pro/observable-class/raw/main/assets/esm.svg" alt="size-esm"/>
+        </a>
+        <a href="https://bundlephobia.com/package/kr-observable" rel="nofollow">
+          <img src="https://github.com/nihil-pro/observable-class/raw/main/assets/cjs.svg" alt="size-cjs"/>
+        </a>
+      </div>
     </main>
   )
 }

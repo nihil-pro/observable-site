@@ -31,7 +31,7 @@ export default {
   },
   output: {
     clean: true,
-    filename: '[name].js',
+    filename: '[name].[hash].js',
     path: path.resolve('build'),
     publicPath: '/',
   },
@@ -39,9 +39,9 @@ export default {
     ignored: /node_modules/,
   },
   optimization: {
-    minimize: false,
-    chunkIds: 'named',
-    moduleIds: 'named',
+    minimize: true,
+    // chunkIds: 'named',
+    // moduleIds: 'named',
     mangleExports: false,
     splitChunks: {
       hidePathInfo: true,
